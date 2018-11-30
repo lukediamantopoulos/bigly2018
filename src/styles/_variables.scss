@@ -1,0 +1,13 @@
+// SCSS Variables
+$grey: #363636;  // Grey 
+$grey--dark: #191919; // Dark Grey
+$grey--light: lighten( $grey, 30%); // Dark Grey
+$white: #f9f9f9; // White
+$white--dark: darken($white, 40%); // White
+$primary: #08B7F9;
+$primary--dark: #0e6686;
+
+$color--husky: #E4D700;
+
+$font--montserrat: 'Poppins', sans-serif;
+$font--open: 'Open Sans', sans-serif;
