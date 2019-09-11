@@ -1,3 +1,5 @@
+import utils from './scripts/utils'
+
 const app = {
 
 	init: function() {
@@ -38,9 +40,9 @@ const app = {
 	cacheDOM: function() {
 
 		// Creative
-		this.body = document.body;
+		document.body = document.body;
 		this.html = document.documentElement;
-		this.docHeight = Math.max( this.body.scrollHeight, this.body.offsetHeight, this.html.clientHeight, this.html.scrollHeight, this.html.offsetHeight );
+		this.docHeight = Math.max( document.body.scrollHeight, document.body.offsetHeight, this.html.clientHeight, this.html.scrollHeight, this.html.offsetHeight );
 
 		// Fun
 		this.logo = document.querySelector('.logo');
@@ -59,7 +61,7 @@ const app = {
 		this.footerHeight = 0;
 		this.footerItems = document.querySelectorAll('footer *');
 		this.footerItems_container = this.footer.querySelector('.container');
-		this.aboveFooter = node_before(this.footer);
+		this.aboveFooter = utils.node_before(this.footer);
 
 		// Post Navigation
 		this.post_nav = document.querySelector('.navigation--post');
@@ -67,7 +69,7 @@ const app = {
 	},
 
 	onResize: function()  {
-		this.docHeight = Math.max( this.body.scrollHeight, this.body.offsetHeight, this.html.clientHeight, this.html.scrollHeight, this.html.offsetHeight );
+		this.docHeight = Math.max( document.body.scrollHeight, document.body.offsetHeight, this.html.clientHeight, this.html.scrollHeight, this.html.offsetHeight );
 	}
 };
 
@@ -115,7 +117,7 @@ app.animateFooter = function(e) {
 
 app.workOnClick = function(e) {
 	const target = this.querySelector('.col--expandable')
-	const coords = findFixedPos(target);
+	const coords = utils.findFixedPos(target);
 
 	TweenMax.set( target, { x: coords.x, y: coords.y, width: coords.w, height: coords.h, position: 'fixed', zIndex: 9999 });
 
@@ -160,52 +162,6 @@ app.checkScroll = function(e) {
     } 
   });
 };
-
-// Helper functions 
-const findFixedPos = ( element ) => {
-	return {
-		x: element.getBoundingClientRect().left,
-		y: element.getBoundingClientRect().top,
-		w: element.offsetWidth,
-		h: element.offsetHeight
-	}
-}
-
-// Debounce runs every 20ms to avoid overlogging
-function deBounce( func, wait = 20, immediate = true) {      
-  var timeout;
-  return function() {
-    var context = this;
-    var args = arguments;
-    var later = function() {
-      timeout = null;
-      if ( !immediate ) func.apply( context, args );
-    }
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout( later, wait );
-    if ( callNow) func.apply( context, args );
-  }
-};
-
-// Ignore white space when looking for previous node
-function is_all_ws( nod ) {
-  // Use ECMA-262 Edition 3 String and RegExp features
-  return !(/[^\t\n\r ]/.test(nod.textContent));
-}
-
-function is_ignorable( nod ) {
-  return ( nod.nodeType == 8) || // A comment node
-         ( (nod.nodeType == 3) && is_all_ws(nod) ); // a text node, all ws
-}
-
-function node_before( sib ) {
-  while ((sib = sib.previousSibling)) {
-    if (!is_ignorable(sib)) return sib;
-  }
-  return null;
-}
-
 
 window.addEventListener('load', function() {
 	app.init();

@@ -28,7 +28,7 @@ sup {
 }
 
 .highlight {
-	color: $primary !important;
+	color: $primary--light !important;
 }
 
 // Headings
@@ -83,7 +83,7 @@ sup {
 .heading--meta {
 	font-family: $font--open;
 	font-weight: 400;
-	color: $primary;
+	color: $primary--light;
 	font-size: 1.2rem;
 	font-weight: 400;
 	padding: 2px 0;
@@ -109,7 +109,7 @@ sup {
 }
 
 .copy span {
-	color: $primary;
+	color: $primary--light;
 	font-weight: 400;
 }
 
@@ -134,10 +134,16 @@ sup {
 
 // Email link
 a.link__email {
-	color: $primary;
+	color: $grey--dark;
 	text-decoration: none;
-}
+	display: inline-block;
+	padding: 5px 10px;
+	background: $primary--light;
 
+	&:hover {
+		background: $primary;
+	}
+}
 // Navigation
 .navigation__title {
 	@extend .heading;
